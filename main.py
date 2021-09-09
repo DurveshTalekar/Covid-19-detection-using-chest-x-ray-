@@ -1,5 +1,3 @@
-
-
 import streamlit as st
 from PIL import Image
 import cv2 
@@ -11,188 +9,130 @@ def main():
 
     selected_box = st.sidebar.selectbox(
     'Choose one of the following',
-    ('Welcome','Image Processing', 'Video', 'Face Detection', 'Feature Detection', 'Object Detection')
+    ('Welcome','Image Processing 1', 'Image Processing 2', 'Image Preprocessing', 'Detection')
     )
     
     if selected_box == 'Welcome':
         welcome() 
-    if selected_box == 'Image Processing':
+    if selected_box == 'Image Processing 1':
         photo()
-    if selected_box == 'Video':
-        video()
-    if selected_box == 'Face Detection':
-        face_detection()
-    if selected_box == 'Feature Detection':
+    if selected_box == 'Image Processing 2':
+        photo1()
+    if selected_box == 'Image Preprocessing':
+        photo3()
+    if selected_box == 'Detection':
         feature_detection()
-    if selected_box == 'Object Detection':
-        object_detection() 
  
 
 def welcome():
+    _, col2, _ = st.columns([1, 10, 1])
+
+    with col2:
+        st.write("")
+        st.write("")
+        st.write("")
+        st.write("")
+        st.write("")
+        st.title('Covid 19 Detection using X-ray')
+    with col2:
+        st.write("")
+        st.write("")
+        st.write("")
+        st.subheader('Dhanashree Chavan')
+        st.write("")
+        st.subheader('Bhushan Gunjal')
+        st.write("")
+        st.subheader('Durvesh Talekar')
     
-    st.title('Image Processing using Streamlit')
-    
-    st.subheader('A simple app that shows different image processing algorithms. You can choose the options'
-             + ' from the left. I have implemented only a few to show how it works on Streamlit. ' + 
-             'You are free to add stuff to this app.')
-    
-    st.image('hackershrine.jpg',use_column_width=True)
 
 
-def load_image(filename):
-    image = cv2.imread(filename)
-    return image
- 
 def photo():
+                     
+    _, col2, _ = st.columns([1, 6, 1])
 
-    st.header("Thresholding, Edge Detection and Contours")
-    
-    if st.button('See Original Image of Tom'):
-        
-        original = Image.open('tom.jpg')
-        st.image(original, use_column_width=True)
-        
-    image = cv2.imread('tom.jpg')
-    image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    
-    x = st.slider('Change Threshold value',min_value = 50,max_value = 255)  
+    with col2:
 
-    ret,thresh1 = cv2.threshold(image,x,255,cv2.THRESH_BINARY)
-    thresh1 = thresh1.astype(np.float64)
-    st.image(thresh1, use_column_width=True,clamp = True)
+        st.header("Image Pre-processing using CLAHE")
+        st.write("")
+        st.write("")
+        st.write("")
     
-    st.text("Bar Chart of the image")
-    histr = cv2.calcHist([image],[0],None,[256],[0,256])
-    st.bar_chart(histr)
+    ##if st.button('See Original Image'):
+        
+        #original = cv2.imread('image.png')
+        #original = cv2.resize(original, (400, 400))
+        #st.image(original)
+     
+   # image = cv2.imread('image.png')
+   # image = cv2.resize(image, (400, 400))
+  #  image = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+  #  
+  #  x = st.slider('Change Threshold value',min_value = 0,max_value = 10)     
+  #  img = cv2.imread('image.png',0)
+ #   clahe = cv2.createCLAHE(clipLimit = x)
+  #  final_img = clahe.apply(image) 
+  #  st.image(final_img)//
     
-    st.text("Press the button below to view Canny Edge Detection Technique")
-    if st.button('Canny Edge Detector'):
-        image = load_image("jerry.jpg")
-        edges = cv2.Canny(image,50,300)
-        cv2.imwrite('edges.jpg',edges)
-        st.image(edges,use_column_width=True,clamp=True)
+        def load_image(img):
+            im = Image.open(img)
+            image = np.array(im)
+            return image
+
+        uploadFile = st.file_uploader(label="Upload image", type=['jpg', 'png', 'jpeg'])
+
+        if uploadFile is not None:
+            st.write("Original X-ray Image:")
+            st.write("")
+            img = load_image(uploadFile)
+            final_img = cv2.resize(img, (400, 400))
+            st.image(final_img)
+            
+            #im = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
+            clahe = cv2.createCLAHE(clipLimit = 4) 
+            final_img = clahe.apply(img) 
+            final_img = cv2.resize(final_img, (400, 400))
+            st.write("")
+            st.write("")
+            st.write("After applying CLAHE:")
+            st.write("")
       
-    y = st.slider('Change Value to increase or decrease contours',min_value = 50,max_value = 255)     
+            st.image(final_img)
+        else:
+            st.write("Make sure you image is in JPG/PNG Format.")
     
-    if st.button('Contours'):
-        im = load_image("jerry1.jpg")
-          
-        imgray = cv2.cvtColor(im,cv2.COLOR_BGR2GRAY)
-        ret,thresh = cv2.threshold(imgray,y,255,0)
-        image, contours, hierarchy = cv2.findContours(thresh,cv2.RETR_TREE,cv2.CHAIN_APPROX_SIMPLE)
+def photo1():
         
-        img = cv2.drawContours(im, contours, -1, (0,255,0), 3)
- 
         
-        st.image(thresh, use_column_width=True, clamp = True)
-        st.image(img, use_column_width=True, clamp = True)
-         
+        def load_image(img):
+            im = Image.open(img)
+            image = np.array(im)
+            return image
 
-    
-def video():
-    uploaded_file = st.file_uploader("Choose a video file to play")
-    if uploaded_file is not None:
-         bytes_data = uploaded_file.read()
- 
-         st.video(bytes_data)
-         
-    video_file = open('typing.mp4', 'rb')
-         
- 
-    video_bytes = video_file.read()
-    st.video(video_bytes)
- 
+        uploadFile = st.file_uploader(label="Upload image", type=['jpg', 'png', 'jpeg'])
 
-def face_detection():
+        if uploadFile is not None:
+            st.write("Original X-ray Image:")
+            st.write("")
+            img = load_image(uploadFile)
+            img = cv2.resize(img, (400, 400))
+            
+            x = st.slider('Change Threshold value',min_value = 69,max_value = 169)
+            image = cv2.imread('image.png')
+            image = cv2.resize(img, (300, 300))
+            ret,thresh1 = cv2.threshold(image,x,255,cv2.THRESH_BINARY)
+            thresh1 = thresh1.astype(np.float64)
+            st.image(thresh1, use_column_width=True,clamp = True)
     
-    st.header("Face Detection using haarcascade")
-    
-    if st.button('See Original Image'):
-        
-        original = Image.open('friends.jpeg')
-        st.image(original, use_column_width=True)
-    
-    
-    image2 = cv2.imread("friends.jpeg")
+            st.text("Bar Chart of the image")
+            histr = cv2.calcHist([image],[0],None,[256],[0,256])
+            st.bar_chart(histr)
+      
+            st.image(final_img)
+        else:
+            st.write("Make sure you image is in JPG/PNG Format.")
+            
+            
 
-    face_cascade = cv2.CascadeClassifier("haarcascade_frontalface_default.xml")
-    faces = face_cascade.detectMultiScale(image2)
-    print(f"{len(faces)} faces detected in the image.")
-    for x, y, width, height in faces:
-        cv2.rectangle(image2, (x, y), (x + width, y + height), color=(255, 0, 0), thickness=2)
-    
-    cv2.imwrite("faces.jpg", image2)
-    
-    st.image(image2, use_column_width=True,clamp = True)
- 
-
-def feature_detection():
-    st.subheader('Feature Detection in images')
-    st.write("SIFT")
-    image = load_image("tom1.jpg")
-    gray = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
-    sift = cv2.xfeatures2d.SIFT_create()    
-    keypoints = sift.detect(gray, None)
-     
-    st.write("Number of keypoints Detected: ",len(keypoints))
-    image = cv2.drawKeypoints(image, keypoints, None, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-    st.image(image, use_column_width=True,clamp = True)
-    
-    
-    st.write("FAST")
-    image_fast = load_image("tom1.jpg")
-    gray = cv2.cvtColor(image_fast, cv2.COLOR_BGR2GRAY)
-    fast = cv2.FastFeatureDetector_create()
-    keypoints = fast.detect(gray, None)
-    st.write("Number of keypoints Detected: ",len(keypoints))
-    image_  = cv2.drawKeypoints(image_fast, keypoints, None, flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-    st.image(image_, use_column_width=True,clamp = True)
-
-    
-    
-def object_detection():
-    
-    st.header('Object Detection')
-    st.subheader("Object Detection is done using different haarcascade files.")
-    img = load_image("clock.jpg")
-    img_gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY) 
-    img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
-    
-    clock = cv2.CascadeClassifier('haarcascade_wallclock.xml')  
-    found = clock.detectMultiScale(img_gray,  
-                                   minSize =(20, 20)) 
-    amount_found = len(found)
-    st.text("Detecting a clock from an image")
-    if amount_found != 0:  
-        for (x, y, width, height) in found:
-     
-            cv2.rectangle(img_rgb, (x, y),  
-                          (x + height, y + width),  
-                          (0, 255, 0), 5) 
-    st.image(img_rgb, use_column_width=True,clamp = True)
-    
-    
-    st.text("Detecting eyes from an image")
-    
-    image = load_image("eyes.jpg")
-    img_gray_ = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY) 
-    img_rgb_ = cv2.cvtColor(image, cv2.COLOR_BGR2RGB) 
-        
-    eye = cv2.CascadeClassifier('haarcascade_eye.xml')  
-    found = eye.detectMultiScale(img_gray_,  
-                                       minSize =(20, 20)) 
-    amount_found_ = len(found)
-        
-    if amount_found_ != 0:  
-        for (x, y, width, height) in found:
-         
-            cv2.rectangle(img_rgb_, (x, y),  
-                              (x + height, y + width),  
-                              (0, 255, 0), 5) 
-        st.image(img_rgb_, use_column_width=True,clamp = True)
-    
-    
-    
     
 if __name__ == "__main__":
     main()
