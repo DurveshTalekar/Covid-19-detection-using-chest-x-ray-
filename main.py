@@ -94,15 +94,30 @@ def photo():
             img8.save(r'C:\Users\durve\OneDrive\Desktop\Machine Learning\1.jpg')
             #final_img0 = cv2.resize(img8, (255, 255))
             #im = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-            imagex = cv2.imread("1.jpg")
+            image = cv2.imread("1.jpg")
+            cv2.imshow('image', image)
+            # Resizing the image for compatibility
+            image = cv2.resize(image, (300, 300))
+
+            # The initial processing of the image
+            # image = cv2.medianBlur(image, 3)
+            image_bw = cv2.cvtColor(image, cv2.COLOR_BGR2GRAY)
+
+            # The declaration of CLAHE 
+            # clipLimit -> Threshold for contrast limiting
             clahe = cv2.createCLAHE(clipLimit = 4)
-            final_img1 = clahe.apply(imagex) 
-            #final_img2 = cv2.resize(final_img1, (255, 255))
+            final_img = clahe.apply(image_bw) 
+
+            # Ordinary thresholding the same image
+            _, ordinary_img = cv2.threshold(image_bw, 155, 255, cv2.THRESH_BINARY)
+            #clahe = cv2.createCLAHE(clipLimit = 4)
+#             final_img1 = clahe.apply(imagex) 
+#             final_img2 = cv2.resize(final_img1, (299, 299))
             st.write("")
             st.write("")
             st.write("After applying CLAHE:")
             st.write("")
-            st.image(final_img1)
+            st.image(final_img)
         else:
             st.write("Make sure you image is in JPG/PNG Format.")
     
