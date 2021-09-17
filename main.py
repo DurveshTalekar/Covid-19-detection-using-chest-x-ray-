@@ -77,8 +77,8 @@ def photo():
     
         def load_image(img):
             im = Image.open(img)
-            image = np.array(im)
-            return image
+            image_array = np.array(im)
+            return image_array
 
         uploadFile = st.file_uploader(label="Upload image", type=['jpg', 'png', 'jpeg'])
 
