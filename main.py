@@ -91,17 +91,18 @@ def photo():
             img8 = Image.fromarray(np.uint8(final_img))
             t = img8.convert('L')
             img8=Image.fromarray(np.uint8(t)*255)
+            
             #final_img0 = cv2.resize(img8, (255, 255))
             #im = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
             #clahe = cv2.createCLAHE(clipLimit = 4)
             #final_img1 = clahe.apply(img8) 
-            final_img2 = cv2.resize(img8, (255, 255))
+            #final_img2 = cv2.resize(img8, (255, 255))
             st.write("")
             st.write("")
             st.write("After applying CLAHE:")
             st.write("")
-      
-            st.image(final_img2)
+            st.image(img8)
+            #st.image(final_img2)
         else:
             st.write("Make sure you image is in JPG/PNG Format.")
     
