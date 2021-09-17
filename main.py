@@ -97,12 +97,12 @@ def photo():
             imagex = cv2.imread("1.jpg")
             clahe = cv2.createCLAHE(clipLimit = 4)
             final_img1 = clahe.apply(imagex) 
-            final_img2 = cv2.resize(final_img1, (255, 255))
+            #final_img2 = cv2.resize(final_img1, (255, 255))
             st.write("")
             st.write("")
             st.write("After applying CLAHE:")
             st.write("")
-            st.image(final_img2)
+            st.image(final_img1)
         else:
             st.write("Make sure you image is in JPG/PNG Format.")
     
