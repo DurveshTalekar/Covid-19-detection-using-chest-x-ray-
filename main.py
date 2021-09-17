@@ -90,12 +90,8 @@ def photo():
             st.image(final_img)
             
             #im = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-            #imgg = Image.open('covid3.jpg')
-            imgg = Image.fromarray(np.uint8(final_img))
-            t = imgg.convert('L')
-            imgg=Image.fromarray(np.uint8(t)*255)
             clahe = cv2.createCLAHE(clipLimit = 4)
-            final_img1 = clahe.apply(imgg) 
+            final_img1 = clahe.apply(final_img) 
             final_img2 = cv2.resize(final_img1, (256, 256))
             st.write("")
             st.write("")
