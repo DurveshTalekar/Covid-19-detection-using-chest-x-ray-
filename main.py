@@ -86,7 +86,7 @@ def photo():
             st.write("Original X-ray Image:")
             st.write("")
             img = load_image(uploadFile)
-            final_img = cv2.resize(img, (255, 255))
+            final_img = cv2.resize(img, (299, 299))
             st.image(final_img)
             img8 = Image.fromarray(np.uint8(final_img))
             t =img8.convert('L')
@@ -97,7 +97,7 @@ def photo():
             image = cv2.imread(r'C:\Users\durve\OneDrive\Desktop\Machine Learning\1.jpg')
             #cv2.imshow('1.jpg', image)
             # Resizing the image for compatibility
-            image = cv2.resize(image, (300, 300))
+            image = cv2.resize(image, (299, 299))
 
             # The initial processing of the image
             # image = cv2.medianBlur(image, 3)
@@ -109,7 +109,7 @@ def photo():
             final_img = clahe.apply(image_bw) 
 
             # Ordinary thresholding the same image
-            _, ordinary_img = cv2.threshold(image_bw, 155, 255, cv2.THRESH_BINARY)
+            #_, ordinary_img = cv2.threshold(image_bw, 155, 255, cv2.THRESH_BINARY)
             #clahe = cv2.createCLAHE(clipLimit = 4)
 #             final_img1 = clahe.apply(imagex) 
 #             final_img2 = cv2.resize(final_img1, (299, 299))
