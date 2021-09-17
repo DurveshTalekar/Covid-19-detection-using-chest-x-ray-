@@ -89,8 +89,9 @@ def photo():
             
             #im = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
             clahe = cv2.createCLAHE(clipLimit = 4) 
-            final_img = clahe.apply(img) 
             final_img = cv2.resize(final_img, (256, 256))
+            final_img = clahe.apply(img) 
+            
             st.write("")
             st.write("")
             st.write("After applying CLAHE:")
