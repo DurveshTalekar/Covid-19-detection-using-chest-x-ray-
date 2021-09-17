@@ -94,7 +94,7 @@ def photo():
             img8.save(r'C:\Users\durve\OneDrive\Desktop\Machine Learning\1.jpg')
             #final_img0 = cv2.resize(img8, (255, 255))
             #im = cv2.cvtColor(img, cv2.COLOR_RGB2GRAY)
-            image = cv2.imread("1.jpg")
+            image = cv2.imread('C:\Users\durve\OneDrive\Desktop\Machine Learning\1.jpg')
             #cv2.imshow('1.jpg', image)
             # Resizing the image for compatibility
             image = cv2.resize(image, (300, 300))
