@@ -1,7 +1,5 @@
-altair
-pandas
-streamlit
-
-matplotlib
+tensorflow
+pillow
 numpy
-opencv-python-headless
+h5py
+streamlit
